@@ -1,0 +1,1 @@
+[{"model": "animals.animalcategory", "pk": 1, "fields": {"subclass": "Pterygota", "description": ""}}, {"model": "animals.animalcategory", "pk": 2, "fields": {"subclass": "Dicondylia", "description": ""}}, {"model": "animals.animalcategory", "pk": 3, "fields": {"subclass": "Archaeognatha", "description": ""}}]

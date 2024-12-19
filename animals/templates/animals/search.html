@@ -1,0 +1,22 @@
+{% extends 'animals/base.html' %}
+{% load static %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static 'vendor/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1 class="mt-5">Поиск по картотеке</h1>
+                    <br><br>
+                    <p>
+                        Здесь будет реализован поиск по картотеке насекомых
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

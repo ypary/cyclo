@@ -1,0 +1,62 @@
+{% extends 'animals/base.html' %}
+{% load static %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static 'vendor/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/animals.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1 class="mt-5">Симулятор</h1>
+                    <br><br>
+                    <p>
+                        Здесь будет реализован симулятор жизненного цикла насекомых.
+                        А пока он готовится предлагаем проверить Ваши знания!
+                        Ответьте на вопрос:
+                    </p>
+{#                    {% for animal in animals_l %}#}
+{#                        <p>Имя: {{animal.name}}</p>#}
+{#                    {% endfor %}#}
+                        <p>К какому подклассу принадлежит <b>{{ question_name }}</b>?</p>
+                        <select id = "answer">
+                            <option></option>
+                            {% for cat in category %}
+                                <option >{{ cat.subclass }}</option>
+                            {% endfor %}
+                        </select>
+                        <br><br>
+                        <button id="start-purchase-btn" type="button" class="btn btn-lg">
+                            <a id="mybut">
+                                Показать ответ
+                            </a>
+                        </button>
+                        <p id="true_answer" hidden="true">{{ question_answer }}</p>
+                        <button id="start-purchase-btn" type="button" class="btn btn-lg">
+                            <a id="start-purchase-link" href="{% url 'simulator' %}">
+                                Сгенерировать еще вопрос
+                            </a>
+                        </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+
+    let ans = document.getElementById('answer');
+    let true_answer = document.getElementById('true_answer').textContent;
+    let my_answer = ans.options[ans.selectedIndex].value;
+
+    const callback = () => {
+        alert('Правильный ответ: ' + true_answer);
+}
+
+    const button = document.querySelector('#mybut');
+
+    button.addEventListener('click', callback);
+</script>
+{% endblock %}
