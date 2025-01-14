@@ -29,6 +29,7 @@ urlpatterns = [
     path('search/', search, name='search'),
     path('simulator/', simulator, name='simulator'),
     path('login/', login, name='login'),
+    path('users/', include('users.urls', namespace='users')),
 ]
 
 if settings.DEBUG == True:
