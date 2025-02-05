@@ -31,3 +31,7 @@ def registration(request):
         form = UserRegisterForm()
     context = {'form': form}
     return render(request, 'users/registration.html', context)
+
+def home(request):
+    context = {'title': 'Профиль'}
+    return render(request, 'users/home.html', context)
