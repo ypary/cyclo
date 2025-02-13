@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 
-from animals.views import index, animals, search, simulator, login
+from animals.views import index, animals, search, simulator, login, new_simulator
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('simulator/', simulator, name='simulator'),
     path('login/', login, name='login'),
     path('users/', include('users.urls', namespace='users')),
+    path('new_simulator/', new_simulator, name='new_simulator'),
 ]
 
 if settings.DEBUG == True:

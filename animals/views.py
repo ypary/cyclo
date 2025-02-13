@@ -49,3 +49,20 @@ def login(request):
         'username': 'Alice'
     }
     return render(request, 'animals/login.html', context)
+
+def new_simulator(request):
+    context = {
+        'title': 'Страница входа',
+        'username': 'Alice'
+    }
+    result = None
+    if request.method == 'POST':
+        try:
+            n1 = float(request.POST['n1'])
+            n2 = float(request.POST['n2'])
+            n3 = float(request.POST['n3'])
+            result = n1 + n2 + n3
+        except ValueError:
+            result = 'F'
+        context['result'] = int(result)
+    return render(request, 'animals/new_simulater.html', context)
