@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from animals.models import AnimalCategory, Animal
+from django.core.serializers import serialize
 
-import random
+import random, json
 
 # Create your views here.
 
@@ -15,11 +16,21 @@ def index(request):
     return render(request, 'animals/index.html')
 
 def animals(request):
+    # Получаем данные из базы данных
     context = {
         'title': 'Каталог насекомых',
         'animals': Animal.objects.all(),
         'category': AnimalCategory.objects.all()
     }
+
+    # Преобразуем QuerySet в JSON-совместимый формат
+    category_json = serialize('json', AnimalCategory.objects.all())
+    animals_json = serialize('json', Animal.objects.all())
+
+    # Добавляем JSON-данные в контекст
+    context['category_json'] = category_json
+    context['animals_json'] = animals_json
+
     return render(request, 'animals/animals.html', context)
 
 def search(request):

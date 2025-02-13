@@ -9,21 +9,22 @@
     <div class="container">
 
         <div class="row">
-    
+
             <div class="col-lg-3">
-    
+
                 <h1 class="my-4">Каталог</h1>
                 <div class="list-group">
+                    <a href="#" class="list-group-item active" data-filter="all">Все</a>
                     {% for subclass in category %}
-                        <a href="#" class="list-group-item">{{ subclass.subclass}}</a>
+                        <a href="#" class="list-group-item" data-filter="{{ subclass.subclass }}">{{ subclass.subclass}}</a>
                     {% endfor %}
                 </div>
-    
+
             </div>
             <!-- /.col-lg-3 -->
 
             <div class="col-lg-9">
-                
+
                 <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -50,10 +51,10 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-    
-                <div class="row">
+
+                <div class="row" id="animals-cards">
                     {% for animal in animals %}
-                        <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="col-lg-4 col-md-6 mb-4" data-subclass="{{animal.subclass.subclass }}">
                             <div class="card h-100">
                                 <a href="#">
                                     <img class="card-img-top"
@@ -65,7 +66,7 @@
                                         <a href="#">{{animal.name}}</a>
                                     </h4>
                                     <h5>{{animal.name_l}}</h5>
-                                    <p class="card-text">Подкласс: {{ animal.subclass.subclass }}</p>
+                                    <p class="card-text">Подкласс: {{animal.subclass.subclass }}</p>
                                 </div>
                                 <div class="card-footer text-center">
                                     <button type="button" class="btn btn-outline-success">Открыть карточку</button>
@@ -73,9 +74,9 @@
                             </div>
                          </div>
                     {% endfor %}
-    
+
                 </div>
-    
+
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <li class="page-item disabled">
@@ -89,10 +90,56 @@
                         </li>
                     </ul>
                 </nav>
-    
             </div>
-    
         </div>
-
     </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        console.log('JavaScript работает!');
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterLinks = document.querySelectorAll('.list-group .list-group-item');
+            const animalCards = document.querySelectorAll('#animals-cards .col-lg-4');
+
+            console.log('filterLinks:', filterLinks);
+            console.log('animalCards:', animalCards);
+
+            if (filterLinks.length === 0 || animalCards.length === 0) {
+                console.error('Элементы не найдены!');
+            }
+            // Функция для применения фильтра
+            function applyFilter(filterValue) {
+                animalCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-subclass') === filterValue) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // Обработчик кликов на ссылки фильтра
+            filterLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    // Удаление активного класса у всех ссылок
+                    filterLinks.forEach(item => item.classList.remove('active'));
+
+                    // Добавление активного класса к текущей ссылке
+                    this.classList.add('active');
+
+                    // Получение значения фильтра из атрибута data-filter
+                    const filterValue = this.getAttribute('data-filter');
+
+                    // Применение фильтра
+                    applyFilter(filterValue);
+                });
+            });
+
+            // По умолчанию показываем все карточки
+            applyFilter('all');
+        });
+    </script>
 {% endblock %}
