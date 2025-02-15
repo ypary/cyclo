@@ -1,17 +1,29 @@
+{% extends 'animals/base.html' %}
+{% load static %}
 
+{% block css %}
+	<link rel="stylesheet" href="{% static 'vendor/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/animals.css' %}">
+{% endblock %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Результаты симуляции</title>
-</head>
-<body>
-    <h1>Результаты симуляции:</h1>
-    <ul>
-        {% for message in result %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'simulator_form' %}">Назад к форме</a>
-</body>
-</html>
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <h1 class="mt-5">Симулятор жизненного цикла насекомого</h1>
+                    <br><br>
+                    <p>
+                        Результаты симуляции:
+                    </p>
+                    <ul>
+                        {% for message in result %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                <a href="{% url 'new_simulator' %}">Назад к форме</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

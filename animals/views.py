@@ -78,7 +78,7 @@ def login(request):
         'username': 'Alice'
     }
     return render(request, 'animals/login.html', context)
-
+'''
 def new_simulator(request):
     context = {
         'title': 'Симулятор',
@@ -95,8 +95,8 @@ def new_simulator(request):
             result = 'F'
         context['result'] = int(result)
     return render(request, 'animals/new_simulator.html', context)
-
-def simulator_form(request):
+'''
+def new_simulator(request):
     if request.method == 'POST':
         form = SimulatorForm(request.POST)
         if form.is_valid():
@@ -115,7 +115,7 @@ def simulator_form(request):
     else:
         form = SimulatorForm()
 
-    return render(request, 'animals/simulator_form.html', {'form': form})
+    return render(request, 'animals/new_simulator.html', {'form': form})
 
 def simulator_result(request):
     # Эта функция может быть опциональной, если результаты передаются напрямую
