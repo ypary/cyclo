@@ -1,6 +1,8 @@
+from django.db.models.expressions import result
 from django.shortcuts import render
 from animals.models import AnimalCategory, Animal
 from django.core.serializers import serialize
+from django.db.models import Q
 
 import random, json
 
@@ -34,9 +36,15 @@ def animals(request):
     return render(request, 'animals/animals.html', context)
 
 def search(request):
+    query = request.GET.get('q')
+    results = []
+    if query:
+        results = Animal.objects.filter(Q(name__contains=query)|Q(name_l__contains=query)|Q(subclass__subclass__contains=query))
     context = {
         'title': 'Поиск в картотеке',
-        'username': 'Alice'
+        'username': 'Alice',
+        'results': results,
+        'query': query
     }
     return render(request, 'animals/search.html', context)
 

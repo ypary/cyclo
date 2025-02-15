@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block css %}
-	<link rel="stylesheet" href="{% static 'vendor/css/index.css' %}">
+	<link rel="stylesheet" href="{% static 'vendor/css/animals.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -12,9 +12,42 @@
                 <div class="col-lg-6">
                     <h1 class="mt-5">Поиск по картотеке</h1>
                     <br><br>
-                    <p>
-                        Здесь будет реализован поиск по картотеке насекомых
-                    </p>
+                     <form method="get" action="{% url 'search' %}">
+                        <input type="text" name="q" placeholder="Введите строку для поиска">
+                        <button type="submit">Поиск</button>
+                    </form>
+                    <ul>
+                        {% if results %}
+                            <h2>Релультат:</h2>
+                        {% endif %}
+                        {% for result in results %}
+                            <div class="row" id="animals-cards">
+                                <div class="col-lg-4 col-md-6 mb-4" data-subclass="{{result.subclass.subclass }}">
+                                    <div class="card h-100">
+                                        <a href="#">
+                                        <img class="card-img-top"
+                                            src="{{ result.image.url }}"
+                                            alt="">
+                                        </a>
+                                        <div class="card-body">
+                                             <h4 class="card-title">
+                                                 <a href="#">{{result.name}}</a>
+                                             </h4>
+                                             <h5>{{result.name_l}}</h5>
+                                             <p class="card-text">Подкласс: {{result.subclass.subclass }}</p>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <button type="button" class="btn btn-outline-success">Открыть карточку</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            {% if query %}
+                                <li>Нет результатов для '{{ query }}'</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
