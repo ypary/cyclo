@@ -11,31 +11,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-9">
-                    <h1 class="mt-5">Симулятор</h1>
+                    <h1 class="mt-5">Симулятор жизненного цикла насекомого</h1>
                     <br><br>
                     <p>
-                        Введите три значения
+                        Введите значения температуры в градусах Цельсия, % доступной еды и относительную влажность воздуха для симуляции
                     </p>
-                        <br><br>
+                        <br>
                     <form method="post">
                         {% csrf_token %}
-                        <label for="n1">Число 1</label>
-                        <input type="text" id="n1" name="n1" style="width:500px">
-                        <br><br>
-                        <label for="n2">Число 2</label>
-                        <input type="text" id="n2" name="n2" style="width:500px">
-                        <br><br>
-                        <label for="n3">Число 3</label>
-                        <input type="text" id="n3" name="n3" style="width:500px">
-                        <br><br>
-                        <button id="start-purchase-btn" type="submit" class="btn btn-outline-success" style="width:250px;height:50px">
-                            Сложить
-                        </button>
+                        {{ form.as_p }}
+                        <button type="submit">Запустить симуляцию</button>
                     </form>
-                    {% if result %}
-                        <h2>Результат: {{ result }}</h2>
-                    {% endif %}
-                        
                 </div>
             </div>
         </div>
