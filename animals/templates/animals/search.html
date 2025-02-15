@@ -9,12 +9,14 @@
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-9">
                     <h1 class="mt-5">Поиск по картотеке</h1>
                     <br><br>
                      <form method="get" action="{% url 'search' %}">
-                        <input type="text" name="q" placeholder="Введите строку для поиска">
-                        <button type="submit">Поиск</button>
+                        <input type="text" name="q" placeholder="Введите строку для поиска" style="width:500px;height:50px">
+                        <button id="start-purchase-btn" type="submit" class="btn btn-outline-success" style="width:250px;height:50px">
+                            Поиск
+                        </button>
                     </form>
                     <ul>
                         {% if results %}

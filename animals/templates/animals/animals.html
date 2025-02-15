@@ -76,7 +76,7 @@
                     {% endfor %}
 
                 </div>
-
+<!--
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <li class="page-item disabled">
@@ -90,6 +90,7 @@
                         </li>
                     </ul>
                 </nav>
+                -->
             </div>
         </div>
     </div>
@@ -101,13 +102,15 @@
         document.addEventListener('DOMContentLoaded', function () {
             const filterLinks = document.querySelectorAll('.list-group .list-group-item');
             const animalCards = document.querySelectorAll('#animals-cards .col-lg-4');
-
+/*
             console.log('filterLinks:', filterLinks);
             console.log('animalCards:', animalCards);
 
             if (filterLinks.length === 0 || animalCards.length === 0) {
                 console.error('Элементы не найдены!');
             }
+
+ */
             // Функция для применения фильтра
             function applyFilter(filterValue) {
                 animalCards.forEach(card => {

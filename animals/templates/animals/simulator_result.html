@@ -1,0 +1,17 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Результаты симуляции</title>
+</head>
+<body>
+    <h1>Результаты симуляции:</h1>
+    <ul>
+        {% for message in result %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'simulator_form' %}">Назад к форме</a>
+</body>
+</html>
