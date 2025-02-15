@@ -11,40 +11,45 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
-                    <h1 class="mt-5">Симулятор</h1>
+                    <h1 class="mt-5">Блиц-вопрос</h1>
                     <br><br>
                     <p>
-                        Здесь будет реализован симулятор жизненного цикла насекомых.
-                        А пока он готовится предлагаем проверить Ваши знания!
                         Ответьте на вопрос:
                     </p>
 {#                    {% for animal in animals_l %}#}
 {#                        <p>Имя: {{animal.name}}</p>#}
 {#                    {% endfor %}#}
                         <p>К какому подклассу принадлежит <b>{{ question_name }}</b>?</p>
-                        <select id = "answer">
-                            <option></option>
-                            {% for cat in category %}
-                                <option >{{ cat.subclass }}</option>
-                            {% endfor %}
-                        </select>
-                        <br><br>
-                        <button id="start-purchase-btn" type="button" class="btn btn-lg">
-                            <a id="mybut">
-                                Показать ответ в окне
-                            </a>
-                        </button>
-                        <p id="true_answer" hidden="true">{{ question_answer }}</p>
-                        <button id="start-purchase-btn" type="button" class="btn btn-lg">
+                         <form method="post">
+                            {% csrf_token %}
+                            <select id = "answer" style="width:300px">
+                                <option></option>
+                                {% for cat in category %}
+                                    <option >{{ cat.subclass }}</option>
+                                {% endfor %}
+                            </select>
+                            <br><br>
+                            <button id="start-purchase-btn" type="button" class="btn btn-lg" style="width:300px">
+                                <a id="show_answer">
+                                    Показать ответ
+                                </a>
+                            </button>
+                         <br>
+                         </form>
+                        <br>
+                        <button id="start-purchase-btn" type="button" class="btn btn-lg" style="width:300px">
                             <a id="start-purchase-link" href="{% url 'simulator' %}">
                                 Сгенерировать еще вопрос
                             </a>
                         </button>
+                        <br><br>
+                            <p id="true_answer" style="display: none">Правильный ответ: <b>{{ question_answer }}</b></p>
                 </div>
             </div>
         </div>
     </section>
 
+ <!--
     <script>
 
     let ans = document.getElementById('answer');
@@ -59,4 +64,17 @@
 
     button.addEventListener('click', callback);
 </script>
+-->
+
+    {% block js %}
+        <script>
+        // Находим кнопку и добавляем обработчик события "click"
+        document.getElementById('show_answer').addEventListener('click', function () {
+            var answerElement = document.getElementById('true_answer');
+            if (answerElement) {
+                answerElement.style.display = 'block';
+            }
+        });
+    </script>
+    {% endblock %}
 {% endblock %}

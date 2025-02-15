@@ -3,6 +3,8 @@ from django.shortcuts import render
 from animals.models import AnimalCategory, Animal
 from django.core.serializers import serialize
 from django.db.models import Q
+from .forms import SimulatorForm
+from .simulator import InsectSimulator
 
 import random, json
 
@@ -51,15 +53,23 @@ def search(request):
 def simulator(request):
     max_i = Animal.objects.count()
     i = random.randint(1, max_i)
+
     context = {
-        'title': 'Симулятор',
+        'title': 'Блиц-вопрос',
         'username': 'Alice',
         'animals': Animal.objects.all(),
         'category': AnimalCategory.objects.all(),
-        #'question_id': Animal.objects.order_by('?').first().id,
+        # 'question_id': Animal.objects.order_by('?').first().id,
         'question_name': Animal.objects.get(id=i).name,
         'question_answer': Animal.objects.get(id=i).subclass.subclass
     }
+    result = None
+    if request.method == 'POST':
+        try:
+            result = str(request.POST.get('answer'))
+        except ValueError:
+            result = 'Error'
+    context['result'] = str(result)
     return render(request, 'animals/simulator.html', context)
 
 def login(request):
@@ -71,7 +81,7 @@ def login(request):
 
 def new_simulator(request):
     context = {
-        'title': 'Страница входа',
+        'title': 'Симулятор',
         'username': 'Alice'
     }
     result = None
@@ -84,4 +94,29 @@ def new_simulator(request):
         except ValueError:
             result = 'F'
         context['result'] = int(result)
-    return render(request, 'animals/new_simulater.html', context)
+    return render(request, 'animals/new_simulator.html', context)
+
+def simulator_form(request):
+    if request.method == 'POST':
+        form = SimulatorForm(request.POST)
+        if form.is_valid():
+            # Получаем данные из формы
+            temperature = form.cleaned_data['temperature']
+            food_availability = form.cleaned_data['food_availability']
+            humidity = form.cleaned_data['humidity']
+
+            # Запускаем симуляцию
+            simulator = InsectSimulator(temperature, food_availability, humidity)
+            simulator.simulate()
+
+            # Передаем результаты в контекст
+            result = simulator.result
+            return render(request, 'animals/simulator_result.html', {'result': result})
+    else:
+        form = SimulatorForm()
+
+    return render(request, 'animals/simulator_form.html', {'form': form})
+
+def simulator_result(request):
+    # Эта функция может быть опциональной, если результаты передаются напрямую
+    pass
